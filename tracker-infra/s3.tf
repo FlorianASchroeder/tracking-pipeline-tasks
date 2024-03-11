@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "destination" {
-  bucket = "${var.kinesis_stream_name}-data"
+  bucket = "${var.stream_base_name}-data"
 
   tags = var.tag
 }

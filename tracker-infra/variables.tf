@@ -1,5 +1,5 @@
-variable "kinesis_stream_name" {
-  description = "Kinesis Data Stream Name"
+variable "stream_base_name" {
+  description = "Firehose Delivery Stream Base Name"
   default     = "firehose-tracker"
 }
 
@@ -16,4 +16,10 @@ variable "tag" {
   default = {
     app = "firehose-tracker"
   }
+}
+
+variable "event_types" {
+  description = "Event types tracked by the application. Used to create delivery streams and log streams."
+  type        = list(string)
+  default     = ["session_started", "page_view", "checkout", "purchase"]
 }
