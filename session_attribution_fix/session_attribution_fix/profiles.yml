@@ -1,0 +1,6 @@
+session_attribution_fix:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: './session_data.duckdb'
