@@ -27,6 +27,8 @@ The data freshness required is a trailing 1hr window.
 
 * Disadvantages
   * A single firehose stream can only process (in EU): 100k records/s, 1k requests/s, 1 MiB/s
+    -> not fully auto-scaling
+  * records in batched S3 deliveries are not newline-delimited. In order to process data in Athena, an additional lambda data transformation step needs to be added.
 
 * Pricing:
   * Volume-based in 5KB steps: $0.033/month
@@ -34,7 +36,16 @@ The data freshness required is a trailing 1hr window.
   * Max: 5KB*4000/s = 51.84 TB/month -> $1710/month
 
 * Monitoring:
-  * CloudWatch logging for errors
+  * CloudWatch logging for error logs
+  * By default, error output will be sent to dedicated S3 prefix that can be queried via AWS Athena
+  * Firehose delivery stream metrics can be used to setup alerts, e.g. alert when
+    * throttled records reach certain max value
+    * Incoming bytes/put requests / records hit the quota limit
+    * S3 data freshness is lower than 1hr
+    * S3 delivery success is below min threshold, e.g. 98%
+  * AWS Lambda monitoring can be used to setup alerts, e.g. when
+    * throttles reach a certain max value
+    * Error rate is above a threshold
 
 * Alternatives:
   * Kinesis Streams:
@@ -50,6 +61,9 @@ The data freshness required is a trailing 1hr window.
   
   * Snowplow:
     * well-matured ecosystem with variety of trackers, pipeline options and pre-defined dbt models available
+    * reduce engineering time spent on developing an own, proprietary tracking solution
+    * easy to deploy with terraform, but surely requires tweaking for high-throughput scenarios
+    * instead spend engineering time configuring, operating, monitoring all components. Yet, a lot of that time is also required for proprietary solution.
     * can cost up to $4500/mo at 3000 events/s avg rate ([reference](https://discourse.snowplow.io/t/recent-cost-information-for-snowplow/2694/2)).
 
 
