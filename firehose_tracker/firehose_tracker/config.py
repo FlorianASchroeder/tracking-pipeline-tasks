@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     E.g. "FIREHOSE_TRACKER_ROLE_ARN" will be loaded into the ROLE_ARN attribute.
 
     Attributes:
+        REGION_NAME (str): The default AWS region for firehose delivery.
         ROLE_ARN (str): The ARN of the IAM role for firehose delivery.
         BUCKET_ARN (str): The ARN of the S3 bucket for firehose tracking.
         SIZE_IN_MBS (int): The size of each firehose tracking object in megabytes.
@@ -20,6 +21,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_prefix="FIREHOSE_TRACKER_")
 
+    REGION_NAME: str = "eu-central-1"
     ROLE_ARN: str = "arn:aws:iam::339712828249:role/FirehoseAssumeRole"
     BUCKET_ARN: str = "arn:aws:s3:::firehose-tracker-data"
     # PREFIX: str = "app_name/!{timestamp:yyyy/MM/dd}/"

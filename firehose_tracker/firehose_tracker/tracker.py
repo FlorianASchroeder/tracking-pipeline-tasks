@@ -44,7 +44,7 @@ class Tracker(metaclass=SingletonMeta):
         self,
         delivery_stream_base_name: str,
         stream_suffix: str,
-        region_name: str,
+        region_name: str = config.REGION_NAME,
     ):
         self.stream_suffix = stream_suffix
         self.region_name = region_name

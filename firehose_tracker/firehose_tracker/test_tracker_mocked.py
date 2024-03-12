@@ -15,7 +15,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             "test-tracking-stream",
             "suffix-1",
-            "eu-central-1",
         )
         response = tracker.create_delivery_stream()
         assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
@@ -25,14 +24,13 @@ class TestTrackerMocked:
         tracker = Tracker(
             "test-tracking-stream",
             "suffix-1",
-            "eu-central-1",
         )
         _response = tracker.delete_delivery_stream()
         assert tracker.firehose_client.delete_delivery_stream.called
 
     @patch("boto3.client")
     def test_get_delivery_stream_status(self, mock_boto_client):
-        tracker = Tracker("firehose-tracker", "checkout", "eu-central-1")
+        tracker = Tracker("firehose-tracker", "checkout")
         _response = tracker.get_delivery_stream_status()
         assert tracker.firehose_client.describe_delivery_stream.called
 
@@ -46,7 +44,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             delivery_stream_base_name="test-tracking-stream",
             stream_suffix="suffix-1",
-            region_name="eu-central-1",
         )
         tracker.ensure_active()
         assert tracker.active
@@ -61,7 +58,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             delivery_stream_base_name="test-tracking-stream",
             stream_suffix="suffix-1",
-            region_name="eu-central-1",
         )
         tracker.ensure_active(max_retry_override=1, retry_wait=0)
         assert not tracker.active
@@ -71,7 +67,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             delivery_stream_base_name="test-tracking-stream",
             stream_suffix="suffix-1",
-            region_name="eu-central-1",
         )
         tracker.get_delivery_stream_status = lambda: "NOT_FOUND"
         tracker.ensure_active(max_retry_override=1, retry_wait=0)
@@ -91,7 +86,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             "test-tracking-stream",
             "suffix-1",
-            "eu-central-1",
         )
         _response = tracker.ensure_active()
         _response = tracker.put_record({"test": "data"})
@@ -113,7 +107,6 @@ class TestTrackerMocked:
         tracker = Tracker(
             "test-tracking-stream",
             "suffix-1",
-            "eu-central-1",
         )
         _response = tracker.ensure_active()
         _response = tracker.put_records([{"test": "data"}])
