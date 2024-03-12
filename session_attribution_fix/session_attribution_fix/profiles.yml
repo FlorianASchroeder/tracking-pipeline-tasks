@@ -3,4 +3,4 @@ session_attribution_fix:
   outputs:
     dev:
       type: duckdb
-      path: '/workspaces/tracking-pipeline-tasks/session_data.duckdb'
+      path: '/workspaces/tracking-pipeline-tasks/session_attribution_fix/session_data.duckdb'
