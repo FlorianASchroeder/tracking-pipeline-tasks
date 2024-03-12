@@ -1,3 +1,6 @@
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 resource "aws_iam_role" "firehose" {
   name = "FirehoseAssumeRole"
 
@@ -54,7 +57,6 @@ resource "aws_iam_role_policy_attachment" "firehose_s3" {
 }
 
 resource "aws_iam_policy" "put_record" {
-  count       = length(aws_kinesis_firehose_delivery_stream.delivery_stream)
   name_prefix = var.iam_name_prefix
   policy      = <<-EOF
 {
@@ -67,7 +69,7 @@ resource "aws_iam_policy" "put_record" {
                 "firehose:PutRecordBatch"
             ],
             "Resource": [
-                "${aws_kinesis_firehose_delivery_stream.delivery_stream[count.index].arn}"
+                "arn:aws:firehose:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:deliverystream/${var.stream_base_name}-*"
             ]
         }
     ]
@@ -77,9 +79,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "put_record" {
-  count      = length(aws_iam_policy.put_record)
   role       = aws_iam_role.firehose.name
-  policy_arn = aws_iam_policy.put_record[count.index].arn
+  policy_arn = aws_iam_policy.put_record.arn
 }
 
 resource "aws_iam_policy" "firehose_cloudwatch" {

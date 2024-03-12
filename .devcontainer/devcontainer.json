@@ -19,7 +19,8 @@
 				"LittleFoxTeam.vscode-python-test-adapter",
 				"mhutchie.git-graph",
 				"innoverio.vscode-dbt-power-user",
-				"yassun7010.vscode-shandy-sqlfmt"
+				"yassun7010.vscode-shandy-sqlfmt",
+				"hashicorp.terraform"
 			]
 		}
 	},
