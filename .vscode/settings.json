@@ -13,4 +13,6 @@
         "editor.defaultFormatter": "yassun7010.vscode-shandy-sqlfmt",
         "editor.formatOnSave": true
     },
+    "dbt.enableNewDocsPanel": true,
+    "dbt.enableNewLineagePanel": true,
 }

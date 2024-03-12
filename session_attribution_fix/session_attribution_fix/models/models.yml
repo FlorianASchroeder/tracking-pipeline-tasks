@@ -6,9 +6,13 @@ models:
       - name: user_id
         data_type: integer
         description: "Unique user identifier"
+        tests:
+          - not_null
       - name: ts_min_index
         data_type: integer
         description: "Time of the event"
+        tests:
+          - not_null
       - name: session_id
         data_type: varchar
         description: "Unique session identifier"
@@ -19,12 +23,20 @@ models:
       - name: user_id
         data_type: integer
         description: "Unique user identifier"
+        tests:
+          - not_null
       - name: ts_min_index
         data_type: integer
         description: "Time of the event"
+        tests:
+          - not_null
       - name: old_session_id
         data_type: varchar
         description: "Unique session identifier (old)"
       - name: session_id
         data_type: varchar
         description: "Unique session identifier using 30-minute expanding window"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_match_regex:
+              regex: "^u\\d+.s\\d+$"

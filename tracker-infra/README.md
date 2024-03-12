@@ -6,6 +6,10 @@ This terraform configuration sets up all AWS infrastructure components required 
 # to be executed from git root
 cd tracker-infra
 
+# ensure credentials are loaded, e.g. through env-vars
+export AWS_ACCESS_KEY_ID=XXX
+export AWS_SECRET_ACCESS_KEY=XXX
+
 # initialise 
 terraform init
 

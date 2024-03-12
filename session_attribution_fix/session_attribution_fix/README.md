@@ -1,19 +1,23 @@
-Welcome to your new dbt project!
+# Session Attribution Fix
 
-### Using the starter project
-
-Try running the following commands:
-- dbt run
-- dbt test
+The purpose of this small DBT project is to demonstrate how session attribution might be fixed within a DBT pipeline.
+In order to get started, perform the following:
 
 ```sh
+# assume starting in repository root
+cd session_attribution_fix
+# install required packages and activate environment
+poetry install
+cd session_attribution_fix
+# install dbt packages
+dbt deps
 
+# Run & Test models
+dbt build --select raw+
+
+# extract model information
 dbt run-operation generate_model_yaml --args '{"model_names": ["raw","fixed"]}' > models.yml
-```
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+# Look at table
+python -m check_data
+```
