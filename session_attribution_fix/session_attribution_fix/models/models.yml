@@ -35,7 +35,7 @@ models:
         description: "Unique session identifier (old)"
       - name: session_id
         data_type: varchar
-        description: "Unique session identifier using 30-minute expanding window"
+        description: "Unique session identifier using 30-minute expanding window. Consisting of user_id and incremental session number"
         tests:
           - not_null
           - dbt_expectations.expect_column_values_to_match_regex:
