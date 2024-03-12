@@ -6,6 +6,10 @@ Try running the following commands:
 - dbt run
 - dbt test
 
+```sh
+
+dbt run-operation generate_model_yaml --args '{"model_names": ["raw","fixed"]}' > models.yml
+```
 
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)

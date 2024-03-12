@@ -4,5 +4,13 @@
         "firehose_tracker"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "dbt.queryLimit": 500,
+    "files.associations": {
+        "*.sql": "jinja-sql",
+    },
+    "[jinja-sql]": {
+        "editor.defaultFormatter": "yassun7010.vscode-shandy-sqlfmt",
+        "editor.formatOnSave": true
+    },
 }

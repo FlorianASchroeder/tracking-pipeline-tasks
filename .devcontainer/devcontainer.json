@@ -17,7 +17,9 @@
 				"ms-python.mypy-type-checker",
 				"ms-python.black-formatter",
 				"LittleFoxTeam.vscode-python-test-adapter",
-				"mhutchie.git-graph"
+				"mhutchie.git-graph",
+				"innoverio.vscode-dbt-power-user",
+				"yassun7010.vscode-shandy-sqlfmt"
 			]
 		}
 	},

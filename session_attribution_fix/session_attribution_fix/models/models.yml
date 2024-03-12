@@ -1,0 +1,30 @@
+version: 2
+models:
+  - name: raw
+    description: "Raw sessions event data"
+    columns:
+      - name: user_id
+        data_type: integer
+        description: "Unique user identifier"
+      - name: ts_min_index
+        data_type: integer
+        description: "Time of the event"
+      - name: session_id
+        data_type: varchar
+        description: "Unique session identifier"
+
+  - name: fixed
+    description: "Re-attributed sessions event data based on 30-minute expanding window"
+    columns:
+      - name: user_id
+        data_type: integer
+        description: "Unique user identifier"
+      - name: ts_min_index
+        data_type: integer
+        description: "Time of the event"
+      - name: old_session_id
+        data_type: varchar
+        description: "Unique session identifier (old)"
+      - name: session_id
+        data_type: varchar
+        description: "Unique session identifier using 30-minute expanding window"

@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 SELECT 1 as user_id, 1 as ts_min_index, 's1' as session_id
 UNION ALL
 SELECT 1 as user_id, 2 as ts_min_index, 's1' as session_id
