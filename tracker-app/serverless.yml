@@ -1,0 +1,35 @@
+service: tracker-app
+
+useDotenv: true
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.10
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-central-1'}
+  memorySize: 160
+  timeout: 29
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "iam:PassRole"
+          Resource:
+            - { 'Fn::Join': [ ':', [ 'arn:aws:iam:', { 'Ref': 'AWS::AccountId' }, 'role/FirehoseAssumeRole' ] ] }
+      managedPolicies:
+        - "arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess"
+        - "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+
+
+functions:
+  tracker:
+    handler: main.handler
+    events:
+      - httpApi: '*'
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
