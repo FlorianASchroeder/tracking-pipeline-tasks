@@ -118,13 +118,27 @@ class Tracker(metaclass=SingletonMeta):
                     "SizeInMBs": config.SIZE_IN_MBS,
                     "IntervalInSeconds": config.INTERVAL_IN_SECONDS,
                 },
+                "ProcessingConfiguration": {
+                    "Enabled": True,
+                    "Processors": [
+                        {
+                            "Type": "Lambda",
+                            "Parameters": [
+                                {
+                                    "ParameterName": "LambdaArn",
+                                    "ParameterValue": config.FIX_NEWLINE_LAMBDA_ARN,
+                                },
+                            ],
+                        },
+                    ],
+                },
                 "CompressionFormat": config.COMPRESSION_FORMAT,
                 "CloudWatchLoggingOptions": {
                     "Enabled": config.CLOUDWATCH_LOGGING_ENABLED,
                     "LogGroupName": config.LOG_GROUP_NAME,
                     "LogStreamName": self.get_log_stream_name(),
                 },
-                "FileExtension": ".json",
+                "FileExtension": ".jsonl",
             },
         )
         return response

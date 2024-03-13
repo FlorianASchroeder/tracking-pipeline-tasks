@@ -4,6 +4,11 @@ useDotenv: true
 
 frameworkVersion: '3'
 
+custom:
+  ROLE_ARN: { 'Fn::Join': [ ':', [ 'arn:aws:iam:', { 'Ref': 'AWS::AccountId' }, 'role/FirehoseAssumeRole' ] ] }
+  FIX_NEWLINE_LAMBDA_NAME: firehose-transformations-${self:provider.stage}-fix-newline:3
+  FIX_NEWLINE_LAMBDA_ARN: { 'Fn::Join': [ ':', [ 'arn:aws:lambda', { 'Ref': 'AWS::Region' }, { 'Ref': 'AWS::AccountId' }, 'function', '${self:custom.FIX_NEWLINE_LAMBDA_NAME}' ]] }
+
 provider:
   name: aws
   runtime: python3.10
@@ -11,6 +16,10 @@ provider:
   region: ${opt:region, 'eu-central-1'}
   memorySize: 160
   timeout: 29
+  environment:
+    FIREHOSE_TRACKER_ROLE_ARN: ${self:custom.ROLE_ARN}
+    FIREHOSE_TRACKER_FIX_NEWLINE_LAMBDA_ARN: ${self:custom.FIX_NEWLINE_LAMBDA_ARN}
+
   iam:
     role:
       statements:
@@ -18,7 +27,7 @@ provider:
           Action:
             - "iam:PassRole"
           Resource:
-            - { 'Fn::Join': [ ':', [ 'arn:aws:iam:', { 'Ref': 'AWS::AccountId' }, 'role/FirehoseAssumeRole' ] ] }
+            - ${self:custom.ROLE_ARN}
       managedPolicies:
         - "arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess"
         - "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
@@ -28,7 +37,12 @@ functions:
   tracker:
     handler: main.handler
     events:
-      - httpApi: '*'
+      - httpApi:
+          path: /track
+          method: post
+      - httpApi:
+          path: /health
+          method: get
 
 plugins:
   - serverless-python-requirements

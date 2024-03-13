@@ -111,3 +111,27 @@ resource "aws_iam_role_policy_attachment" "firehose_cloudwatch" {
   role       = aws_iam_role.firehose.name
   policy_arn = aws_iam_policy.firehose_cloudwatch.arn
 }
+
+# allow invocation of the lambda function
+resource "aws_iam_policy" "firehose_lambda" {
+  name_prefix = var.iam_name_prefix
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "lambda:InvokeFunction",
+      "Resource": "${var.firehose_transformations_fix_newline_arn}"
+    }
+  ]
+}
+EOF
+  tags   = var.tag
+}
+
+resource "aws_iam_role_policy_attachment" "firehose_lambda" {
+  role       = aws_iam_role.firehose.name
+  policy_arn = aws_iam_policy.firehose_lambda.arn
+}

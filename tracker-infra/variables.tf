@@ -23,3 +23,9 @@ variable "event_types" {
   type        = list(string)
   default     = ["session_started", "page_view", "checkout", "purchase"]
 }
+
+variable "firehose_transformations_fix_newline_arn" {
+  description = "ARN (including version) of the Lambda function used to add newlines to the end of each record. Deploy the function before deploying the infrastructure."
+  type        = string
+  default     = "arn:aws:lambda:eu-central-1:339712828249:function:firehose-transformations-dev-fix-newline:3"
+}

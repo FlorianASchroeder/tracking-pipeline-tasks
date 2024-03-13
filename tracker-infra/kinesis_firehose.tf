@@ -13,6 +13,17 @@ resource "aws_kinesis_firehose_delivery_stream" "delivery_stream" {
     buffering_size     = 128
     buffering_interval = 300
 
+    processing_configuration {
+      enabled = "true"
+      processors {
+        type = "Lambda"
+        parameters {
+          parameter_name  = "LambdaArn"
+          parameter_value = var.firehose_transformations_fix_newline_arn
+        }
+      }
+    }
+
     cloudwatch_logging_options {
       enabled        = "true"
       log_group_name = aws_cloudwatch_log_group.firehose_log_group.name
@@ -21,7 +32,7 @@ resource "aws_kinesis_firehose_delivery_stream" "delivery_stream" {
       log_stream_name = "stream-errors-${var.event_types[count.index]}"
     }
 
-    file_extension = ".json"
+    file_extension = ".jsonl"
   }
 
   tags = var.tag
