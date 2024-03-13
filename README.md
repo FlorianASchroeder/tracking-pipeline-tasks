@@ -55,6 +55,7 @@ The data freshness required is a trailing 1hr window.
 
   * Kafka Connect:
     * Easy to setup
+    * e.g. support streaming inserts into Google BigQuery -> allows real-time analytics
     * but: requires AWS MSK and Kafka topic, incurring costs
     * can handle throughput of at least 40MB/s (10k events/s) using m5.4xlarge priced at $550/month
     * Including broker and storage charges ($0.10/GB/month), costs are way above Firehose

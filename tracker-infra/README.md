@@ -1,6 +1,7 @@
 # AWS Infrastructure for Firehose tracker
 
 This terraform configuration sets up all AWS infrastructure components required to run the firehose tracker.
+Before creation of resources, deploy [firehose-transformations](../firehose-transformations/README.md) and update the ARN together with version number in the [variables.tf](variables.tf).
 
 ```sh
 # to be executed from git root

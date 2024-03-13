@@ -1,6 +1,8 @@
 service: firehose-transformations
 frameworkVersion: '3'
 
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs20.x
