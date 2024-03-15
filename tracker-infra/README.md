@@ -20,6 +20,14 @@ terraform plan
 # Create or update resources
 terraform apply -auto-approve
 
+# Get relevant outputs
+terraform output
+# or pipe into .env file
+terraform output | sed 's/\s*=\s*/=/g' > ../tracker-app/.env
+# or set them as env variables
+export $(terraform output | sed 's/\s*=\s*/=/g' | xargs)
+
+
 # Remove all resources
 terraform destroy
 ```

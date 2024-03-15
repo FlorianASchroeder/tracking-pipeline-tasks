@@ -9,6 +9,7 @@ provider:
   region: ${opt:region, 'eu-central-1'}
   stage: ${opt:stage, 'dev'}
   timeout: 60
+  memorySize: 128
 
 functions:
   fix-newline:

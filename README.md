@@ -133,3 +133,10 @@ The data freshness required is a trailing 1hr window.
 * [firehose-transformation](./firehose-transformations/README.md): JS serverless.com data transformation to create proper newline-separated `.jsonl` output
 * [tracker-app](./tracker-app/README.md): Simple FastAPI tracker application for quick testing
 * [session_attribution_fix](./session_attribution_fix/README.md): dbt project to fix session attribution in the DWH
+
+### How to run
+1. Setup AWS credentials, e.g. in `.env` with admin rights
+2. Deploy `firehose-transformation`
+3. Provision `tracker-infra`
+4. Deploy `tracker-app`
+5. Send traffic
